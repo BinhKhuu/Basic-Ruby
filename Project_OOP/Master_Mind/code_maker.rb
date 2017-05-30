@@ -20,26 +20,40 @@ class CodeMaker
 		f = 0
 		match = false
 		unless compare(guess)
+			#fill in position and color matches first
 			for g in 0..3 do
-				c = 0 
 				match = false
+				c = 0
 				while !match do
 					if guess[g] == code[c]
-						match = true
 						if g == c
+							match = true
 							feed_back[f] = 'black'
-						else
-							feed_back[f] = 'white'
+							f += 1
+							code[c] = nil 
 						end
-						f += 1
-						#remove element to avoid matching twice
-						code[c] = nil
 					end
-					#end loop when index overbound
 					match = true if c == 3
 					c += 1
 				end
 			end
+			#fill in color matches
+			for g in 0..3 do
+				match = false
+				c = 0
+				while !match do
+					if guess[g] == code[c]
+						match = true
+						feed_back[f] = 'white'
+						code[c] = nil
+						f += 1
+					end
+					match = true if c == 3
+					c += 1
+				end
+			end
+			#generate feedback
+
 		else
 			feed_back = ["black","black","black","black"]
 		end
