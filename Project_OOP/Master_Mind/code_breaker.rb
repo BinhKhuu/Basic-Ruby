@@ -100,9 +100,7 @@ class CodeBreaker
 						end
 						match = true if c == 3
 						c +=1
-						
-					end
-					
+					end					
 				end
 				#fill in near misses
 				for j in 0..3
@@ -115,13 +113,12 @@ class CodeBreaker
 							match = true
 							str_code[c] = "8"
 						end
-						c += 1 
 						match = true if c == 3
+						c += 1 
+						
 					end
 				end
 				if cb_feedback == feedback
-					#puts "matched!"
-					#puts @possible_codes[i]
 					temp_list.push(@possible_codes[i])
 				end
 				#temp_list.push(@possible_codes[i]) if cb_feedback == feedback
