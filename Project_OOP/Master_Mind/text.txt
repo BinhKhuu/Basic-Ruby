@@ -1,0 +1,2 @@
+type 1 to be codemaker
+type 2 to be the codebreaker

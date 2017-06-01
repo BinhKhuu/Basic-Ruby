@@ -6,6 +6,7 @@ class TestCodeMaker
 		game = CodeMaker.new()
 		wrong_code = ["black","black",'black','black']
 		assert_equal(false,wrong_code.compare?)
+		
 
 	end
 

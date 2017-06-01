@@ -14,14 +14,20 @@ class MasterMind
 	end
 
 	def play
-		cm = CodeMaker.new()
+		puts "type 1 to be codemaker"
+		puts "type 2 to be the codebreaker"
+		player = gets.chomp.to_i
+		feed_back = []
+		cm = CodeMaker.new(player)
+		cb = CodeBreaker.new(player)
 		while !@finished do
-			cb = CodeBreaker.new()
-			cb.guess_code()
+			puts @turn_num
+			cb.guess_code(feed_back)
 			unless cb.code.include? 'q'
 				if @turn_num == @max_turn
 					puts "game over"
 					puts "code is #{cm.code}"
+					@finished = true
 				elsif cm.compare(cb.code)
 					puts "code is #{cm.code}"
 					puts "congratulations you won!!"
@@ -45,9 +51,7 @@ class MasterMind
 		puts "##################################################"
 		puts ""
 	end
-	def code_solved?
 
-	end
 
 
 end

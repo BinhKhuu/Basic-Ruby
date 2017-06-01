@@ -1,16 +1,26 @@
 class CodeMaker
 	attr_reader :code
 	attr_reader :f_index
-	def initialize
+
+	def initialize(player)
 		@code = []
-		@code = generate_code()
+		@code = generate_code(player)
+		
 	end
 
-	def generate_code
-		colors = {0=>'red', 1=>'blue', 2=>'green', 3=>'pink', 4=>'purple', 5=>'orange'}
-		for i in 0..3 do
-			j = rand(5)
-			@code[i] = colors[j]
+	def generate_code(player)
+		if player == 2	
+			colors = {0=>'red', 1=>'blue', 2=>'green', 3=>'pink', 4=>'purple', 5=>'orange'}
+			for i in 0..3 do
+				j = rand(5)
+				@code[i] = colors[j]
+			end
+		else
+			puts "enter 4 color combination"
+			puts "options are:"
+			puts "red, blue, green, pink, purple and, orange"
+			puts "example: red red red blue"
+			@code = gets.chomp.split(" ")
 		end
 		@code
 	end
@@ -23,13 +33,8 @@ class CodeMaker
 		unless compare(guess)
 			#fill in position and color matches first
 			match_items(temp,code,feedback)
-			puts "f new value is #{@f_index}"
-			print feedback
 			#fill in color matches
 			match_items(temp,code,feedback,'white')
-			print feedback
-			puts "f new value is #{@f_index}"
-			#generate feedback
 		else
 			feedback = ["black","black","black","black"]
 		end
@@ -39,7 +44,8 @@ class CodeMaker
 	def compare(guess)
 		@code == guess
 	end
-
+	
+	private
 	def match_items(guess,code, feedback, flag='black')
 		for g in 0..3 do
 			match = false
