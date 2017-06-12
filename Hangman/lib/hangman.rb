@@ -1,0 +1,111 @@
+
+#game class
+class Hangman
+	attr_reader :turns
+	attr_reader :win
+	attr_reader :guess
+	attr_reader :dict_path
+
+	def initialize
+		@turns = 1
+		@win = false
+		@guess = []
+		parent = File.expand_path("..", Dir.pwd)
+		@dict_path = parent.to_s + "/dictionary.txt"
+	end
+
+	#run game
+	def run
+		#get the player details
+		puts "enter 3 letter player name"
+		name = gets.chomp
+		while name.length > 3
+			system "clear" or system 'cls'
+			puts "enter 3 letter player name"
+			name = gets.chomp
+		end
+		player = Player.new(name)
+		#generate the secret word
+		word = gen_word
+
+		#game begins
+			#ask for user to guess a letter
+
+			#check if letter is in word
+				#turn taken for correct and incorrect guess
+
+			#ask user wants to guess the word
+				#turn taken if incorrect guess
+
+			#check if game is over
+
+	end
+
+	#display current game
+	def display
+
+	end
+	#generate secret word
+	private
+	def gen_word
+		#open dictionary file 
+		word = ""
+		File.open(@dict_path,"r") do |f|
+			while word.length < 5 || word.length > 12
+				#return to start of file
+				f.seek(0)
+				puts "opened #{@dict_path}"
+				indx = rand(1..61406)
+				for i in 1..indx 
+					f.readline
+				end
+				word = f.gets
+			end
+		end		
+
+		#check if word is between 5 and 12 letters
+		#return word
+		word 
+	end
+
+	private
+	def winner?
+
+	end
+
+	#save game
+	def save
+
+	end
+	#load game
+	def load
+
+	end
+
+
+
+
+
+
+end
+#handle game logic
+	#tracks turns 
+	#tracks winning condition
+	#tracks legal and illegal moves
+	#generate secret word
+
+
+#player class
+	#keep record of player info
+		#name
+
+class Player
+	attr_reader :name
+
+	def initialize(name)
+		@name = name
+	end
+end
+
+game = Hangman.new
+game.run
