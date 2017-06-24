@@ -1,0 +1,17 @@
+--- !ruby/object:Hangman
+dict_path: "/home/spoonable/the_odin_project/ruby_programming/Basic-Ruby/Hangman/dictionary.txt"
+turns: 6
+clue:
+- a
+- _
+- _
+- i
+- _
+- e
+- _
+- e
+- _
+bad_letters:
+- o
+- u
+word: altimeter

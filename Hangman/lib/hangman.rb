@@ -1,78 +1,100 @@
+require 'yaml'
 
-#game class
 class Hangman
-	attr_reader :turns
-	attr_reader :win
-	attr_reader :guess
-	attr_reader :dict_path
+	attr_accessor :turns, :clue, :word, :dict_path, :bad_letters
 
 	def initialize
-		@turns = 0
-		@win = false
-		@guess = []
 		parent = File.expand_path("..", Dir.pwd)
 		@dict_path = parent.to_s + "/dictionary.txt"
+		@turns = 0
+		@clue = []
+		@bad_letters = []		
+		@word = gen_word
+		for i in 0..word.length-1
+			@clue[i] = '_'
+		end
 	end
 
-	#run game
-	def run
+	def start
 		#get the player details
-		puts "enter 3 letter player name"
-		name = gets.chomp
-		while name.length > 3
-			system "clear" or system 'cls'
-			puts "enter 3 letter player name"
-			name = gets.chomp
+		puts "options: (1) load, (2) new game"
+		puts "enter 1 or 2:"
+		mode = gets.chomp.to_i
+		while mode < 1 || mode > 2 do
+			system 'clear' or system 'cls'
+			puts "options: (1) load, (2) new game"
+			puts "enter 1 or 2:"
+			mode = gets.chomp.to_i
 		end
-		player = Player.new(name)
-		#generate the secret word
-		word = gen_word
-		bad_letters = []
-		clue = []
-		for i in 0..word.length-1
-			clue[i] = '_'
-		end	
+		# if new game play new game
+		play_game if mode == 2
+		# if load load game
+		load if mode == 1
+	end
+	#run game
+	def play_game
 		#game begins
-		
 		finished = false
 		while !finished do
-			puts "\nguess the word or letter\n"
+			puts "\nguess the word or letter \nto save! current game enter 'save' \nleave game enter 'quit!'\n"
+			display
+			puts @code
 			guess = gets.chomp.downcase
 			if guess.length == 1
 				matched = false	
-				for i in 0..word.length-1			
-					if guess == word[i]
-						clue[i] = guess 
+				for i in 0..@word.length-1			
+					if guess == @word[i]
+						@clue[i] = guess 
 						matched = true
 					end
 				end
-				bad_letters<< guess if !matched
-			elsif guess.length == word.length
+				@bad_letters<< guess if !matched
+			elsif guess.length == @word.length
 				#check if word and guess correct
-				if guess == word 
+				if guess == @word 
 					finished = true
 					puts "Game over you win!"
 				else
 					puts "Wrong!"
 				end
 			#if guess is larger than word no need to check
-			else
-				puts "CLUE! your guess is greater than #{word.length} letters try again"
 			end
 			finished = true if @turns == 11
 			@turns += 1 unless @turns == 11
-			display(clue,bad_letters)
+			if guess == 'save!'
+				save
+				#exit game
+				exit 0
+			end
+			exit 0 if guess == 'quit!'
+
 		end
 		puts "secret word is : #{word}"
-
+		#load game
 	end
-
 	#display current game
-	def display(clue,bad_letters)
-		print "\n#{clue.join(' ')}\t bad letters: #{bad_letters.join(' ')}\t turns left: #{11 - @turns}\n"
+	def display
+		#system "clear" or system 'cls'
+		print "\n#{@clue.join(' ')}\t bad letters: #{@bad_letters.join(' ')}\t turns left: #{11 - @turns}\n"
 
 	end
-	#generate secret word
+	#save game
+	def save
+		File.open("save.yaml", "w") do |f|
+			f.puts YAML.dump(self)
+		end
+		puts "game saved"
+	end
+	#load game
+	def load
+		obj = YAML.load_file('save.yaml')
+		@turns = obj.turns
+		@clue = obj.clue
+		@word = obj.word
+		@bad_letters = obj.bad_letters
+		play_game
+	end
+
 	private
 	def gen_word
 		#open dictionary file 
@@ -88,37 +110,13 @@ class Hangman
 				word = f.gets.chomp
 			end
 		end		
-
-		#check if word is between 5 and 12 letters
-		#return word
 		word.downcase 
 	end
-
-	#save game
-	def save
-
-	end
-	#load game
-	def load
-
-	end
-
-
 
 
 
 
 end
-#handle game logic
-	#tracks turns 
-	#tracks winning condition
-	#tracks legal and illegal moves
-	#generate secret word
-
-
-#player class
-	#keep record of player info
-		#name
 
 class Player
 	attr_reader :name
@@ -129,4 +127,4 @@ class Player
 end
 
 game = Hangman.new
-game.run
+game.start
