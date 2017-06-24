@@ -2,16 +2,17 @@
 dict_path: "/home/spoonable/the_odin_project/ruby_programming/Basic-Ruby/Hangman/dictionary.txt"
 turns: 6
 clue:
-- a
 - _
-- _
+- e
 - i
 - _
-- e
 - _
-- e
+- o
+- o
 - _
 bad_letters:
-- o
+- a
 - u
-word: altimeter
+word: heirloom
+player: !ruby/object:Player
+  name: binh

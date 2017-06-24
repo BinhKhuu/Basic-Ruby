@@ -1,7 +1,7 @@
 require 'yaml'
 
 class Hangman
-	attr_accessor :turns, :clue, :word, :dict_path, :bad_letters
+	attr_accessor :turns, :clue, :word, :dict_path, :bad_letters, :player
 
 	def initialize
 		parent = File.expand_path("..", Dir.pwd)
@@ -10,6 +10,7 @@ class Hangman
 		@clue = []
 		@bad_letters = []		
 		@word = gen_word
+		@player = Player.new("")
 		for i in 0..word.length-1
 			@clue[i] = '_'
 		end
@@ -27,7 +28,13 @@ class Hangman
 			mode = gets.chomp.to_i
 		end
 		# if new game play new game
-		play_game if mode == 2
+		if mode == 2
+			puts "enter 3 letter name"
+			name = gets.chomp
+			@player.name = name[0..2]
+			puts @player.name
+			play_game
+		end
 		# if load load game
 		load if mode == 1
 	end
@@ -53,7 +60,7 @@ class Hangman
 				#check if word and guess correct
 				if guess == @word 
 					finished = true
-					puts "Game over you win!"
+					puts "Game over #{@player.name} you win!"
 				else
 					puts "Wrong!"
 				end
@@ -92,6 +99,7 @@ class Hangman
 		@clue = obj.clue
 		@word = obj.word
 		@bad_letters = obj.bad_letters
+		@player.name = obj.player.name
 		play_game
 	end
 
@@ -119,7 +127,7 @@ class Hangman
 end
 
 class Player
-	attr_reader :name
+	attr_accessor :name
 
 	def initialize(name)
 		@name = name
