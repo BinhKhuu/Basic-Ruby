@@ -83,18 +83,29 @@ class Hangman
 	def display
 		#system "clear" or system 'cls'
 		print "\n#{@clue.join(' ')}\t bad letters: #{@bad_letters.join(' ')}\t turns left: #{11 - @turns}\n"
-
 	end
 	#save game
 	def save
-		File.open("save.yaml", "w") do |f|
+		parent = File.expand_path("..", Dir.pwd)
+		puts "enter name of file:"
+		file_name = gets.chomp
+		File.open("#{parent}/saved_games/#{file_name}.yaml", "w") do |f|
 			f.puts YAML.dump(self)
 		end
 		puts "game saved"
 	end
 	#load game
 	def load
-		obj = YAML.load_file('save.yaml')
+		puts "enter name of file to load:"
+		file_name = gets.chomp
+		parent = File.expand_path("..", Dir.pwd)
+		location = "#{parent}/saved_games/#{file_name}.yaml"
+		while !File.file?(location) do
+			puts "file does not exist!"
+			puts "enter name of file to load"
+			file_name = gets.chomp
+		end
+		obj = YAML.load_file(location)
 		@turns = obj.turns
 		@clue = obj.clue
 		@word = obj.word
