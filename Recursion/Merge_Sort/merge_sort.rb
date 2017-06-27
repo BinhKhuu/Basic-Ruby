@@ -1,6 +1,7 @@
-#unsorted has items to sort, sorted is the array we work with
+#splits the unsorted array into subarrays until the subarrays contain one element
+#* INPUT: unsorted array
+#* OUTPUT: sorted array 
 def merge_sort (unsorted)
-	#base case single element is sorted
 	if unsorted.length == 1
 		return unsorted
 	end
@@ -15,9 +16,12 @@ def merge_sort (unsorted)
 	merge(left,right)
 
 end
-
+# sorts left and right halfs of an array in ascending order
+# * INPUT: left and right halfs of an array
+# * OUTPUT: merge left and right half of an array in ascending order
 def merge (left, right)
 	sorted = []
+	#sort till one side is empty
 	while !left.empty? && !right.empty? do
 		if left[0] > right[0]
 			sorted << right[0]
