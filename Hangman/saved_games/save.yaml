@@ -1,0 +1,19 @@
+--- !ruby/object:Hangman
+dict_path: "/home/spoonable/the_odin_project/ruby_programming/Basic-Ruby/Hangman/dictionary.txt"
+turns: 6
+clue:
+- a
+- _
+- _
+- u
+- _
+- a
+- _
+- _
+- e
+bad_letters:
+- i
+- o
+word: assurance
+player: !ruby/object:Player
+  name: a

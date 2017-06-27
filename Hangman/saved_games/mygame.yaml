@@ -1,0 +1,20 @@
+--- !ruby/object:Hangman
+dict_path: "/home/spoonable/the_odin_project/ruby_programming/Basic-Ruby/Hangman/dictionary.txt"
+turns: 6
+clue:
+- _
+- _
+- _
+- _
+- o
+- _
+- o
+- i
+- _
+bad_letters:
+- a
+- e
+- u
+word: hydrofoil
+player: !ruby/object:Player
+  name: ppp
