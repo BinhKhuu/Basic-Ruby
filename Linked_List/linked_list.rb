@@ -58,6 +58,8 @@ class LinkedList
 		end 
 		@tail = curr_node
 		curr_node = curr_node.next_node
+		@tail.next_node = nil
+		@size -= 1
 		curr_node.value
 	end
 
@@ -67,7 +69,7 @@ class LinkedList
 		i = 0
 		matched = false
 		curr_node = @head.next_node
-		while !matched && i < @size - 1
+		while !matched && i < @size - 2
 			matched = true if curr_node.value == value
 			curr_node = curr_node.next_node
 			i += 1
@@ -75,12 +77,28 @@ class LinkedList
 		matched
 	end
 
-	def find
-
+	def find(value)
+		return 0 if @head.value == value
+		return @size-1 if @tail.value == value
+		matched = false
+		i = 0
+		curr_node = @head.next_node
+		while !matched  && i < @size - 2
+			i += 1
+			matched = true if curr_node.value == value
+			curr_node = curr_node.next_node
+		end
+		i
 	end
 
-	def to_s
 
+	def to_s
+		curr_node = @head
+		for i in 0..@size-1
+			print "#{curr_node.value}->"
+			curr_node = curr_node.next_node
+		end
+		print "nil\n"
 	end
 
 
@@ -116,10 +134,16 @@ puts l.size
 puts l.at(3)
 puts "---"
 
-puts l.pop
+#puts l.pop
 puts l.tail.value
 puts "---"
 
 puts l.contains?('1')
 puts l.contains?('3')
 puts l.contains?('4')
+puts "---"
+puts l.find('1')
+puts l.find('2')
+puts l.find('3')
+
+l.to_s
