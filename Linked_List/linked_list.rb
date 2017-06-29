@@ -6,8 +6,8 @@ class LinkedList
 		@size = 0
 	end
 	#Adds to front of the list
-	#*value: data identified with node
-	#**default is empty node
+	#* value: data identified with node
+	#** default is empty node
 	def append(value = nil)
 		node = Node.new(value)
 		if @head == nil
@@ -20,8 +20,8 @@ class LinkedList
 		@size += 1
 	end
 	#Adds to the end of the list
-	#*value: data identified with node
-	#**default is empty node
+	#* value: data identified with node
+	#** default is empty node
 	def prepend(value = nil)
 		node = Node.new(value)
 		if @head == nil
@@ -34,7 +34,7 @@ class LinkedList
 		@size += 1
 	end
 	#Insert to a list at a specified location
-	#*index: specified location to insert to list
+	#* index: specified location to insert to list
 	def at(index)
 		curr_node = @head
 		curr_indx = 0
@@ -68,8 +68,8 @@ class LinkedList
 		curr_node.value
 	end
 	#check if element exist in list
-	#*value: element to check 
-	#*return: true if element exist in list or false
+	#* value: element to check 
+	#* return: true if element exist in list or false
 	def contains?(value)
 		return true if @head.value == value
 		return false if @size == 1
@@ -77,8 +77,8 @@ class LinkedList
 		match = matched?(value)
 	end
 	#check if element exist in list
-	#*value element to check
-	#*return: index of matched element or nil
+	#* value element to check
+	#* return: index of matched element or nil
 	def find(value)
 		return 0 if @head.value == value
 		return @size-1 if @tail.value == value
@@ -111,7 +111,7 @@ class LinkedList
 		end
 	end
 	#remove element from list
-	#*index: index value of node to remove
+	#* index: index value of node to remove
 	def remove_at(index)
 		if index > @size-1
 			puts "index out of bounds"
@@ -133,8 +133,8 @@ class LinkedList
 	end
 
 	#iterate throught list
-	#*index: location of node
-	#*return: target node at index location
+	#* index: location of node
+	#* return: target node at index location
 	private 
 	def iterate(index)
 		iterator = @head
@@ -146,7 +146,7 @@ class LinkedList
 
 	private
 
-	#*value: default mode returns boolean else index value
+	#* value: default mode returns boolean else index value
 	def matched?(value,mode = 1)
 		i = 0
 		match = false
