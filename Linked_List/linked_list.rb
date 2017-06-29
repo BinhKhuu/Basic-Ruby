@@ -5,7 +5,9 @@ class LinkedList
 		@tail = @head
 		@size = 0
 	end
-
+	#Adds to front of the list
+	#*value: data identified with node
+	#**default is empty node
 	def append(value = nil)
 		node = Node.new(value)
 		if @head == nil
@@ -17,7 +19,9 @@ class LinkedList
 		end
 		@size += 1
 	end
-
+	#Adds to the end of the list
+	#*value: data identified with node
+	#**default is empty node
 	def prepend(value = nil)
 		node = Node.new(value)
 		if @head == nil
@@ -29,7 +33,8 @@ class LinkedList
 		end
 		@size += 1
 	end
-
+	#Insert to a list at a specified location
+	#*index: specified location to insert to list
 	def at(index)
 		curr_node = @head
 		curr_indx = 0
@@ -48,7 +53,7 @@ class LinkedList
 		end
 		curr_node
 	end
-
+	#remove from end of list
 	def pop
 		return tail if @size == 0
 		curr_node = @head
@@ -62,22 +67,24 @@ class LinkedList
 		@size -= 1
 		curr_node.value
 	end
-
+	#check if element exist in list
+	#*value: element to check 
+	#*return: true if element exist in list or false
 	def contains?(value)
 		return true if @head.value == value
 		return false if @size == 1
 		i = 0
-		match = matched?(value,1)
+		match = matched?(value)
 	end
-
+	#check if element exist in list
+	#*value element to check
+	#*return: index of matched element or nil
 	def find(value)
 		return 0 if @head.value == value
 		return @size-1 if @tail.value == value
 		index = matched?(value,2)
-		index
-
 	end
-
+	#print list 
 	def to_s
 		curr_node = @head
 		for i in 0..@size-1
@@ -103,7 +110,8 @@ class LinkedList
 			end
 		end
 	end
-
+	#remove element from list
+	#*index: index value of node to remove
 	def remove_at(index)
 		if index > @size-1
 			puts "index out of bounds"
@@ -124,6 +132,9 @@ class LinkedList
 		end
 	end
 
+	#iterate throught list
+	#*index: location of node
+	#*return: target node at index location
 	private 
 	def iterate(index)
 		iterator = @head
@@ -134,7 +145,9 @@ class LinkedList
 	end
 
 	private
-	def matched?(value,mode)
+
+	#*value: default mode returns boolean else index value
+	def matched?(value,mode = 1)
 		i = 0
 		match = false
 		curr_node = @head.next_node
