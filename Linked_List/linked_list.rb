@@ -6,7 +6,7 @@ class LinkedList
 		@size = 0
 	end
 
-	def append(value=nil)
+	def append(value = nil)
 		node = Node.new(value)
 		if @head == nil
 			@head = node
@@ -18,7 +18,7 @@ class LinkedList
 		@size += 1
 	end
 
-	def prepend(value=nil)
+	def prepend(value = nil)
 		node = Node.new(value)
 		if @head == nil
 			@head = node
@@ -101,49 +101,61 @@ class LinkedList
 		print "nil\n"
 	end
 
+	def insert_at(index, value = nil)
+		if index > @size
+			puts "index out of bounds"
+		else
+			if index == 0
+				prepend(value)
+			elsif index == @size
+				append(value)
+			else
+				curr_node = @head.next_node
+				i = 1
+				while i != index-1
+					curr_node = curr_node.next_node
+					i += 1
+				end 
+				node = Node.new(value)
+				node.next_node = curr_node.next_node
+				curr_node.next_node = node
+				@size += 1
+			end
+		end
+	end
 
+	def remove_at(index)
+		if index > @size-1
+			puts "index out of bounds"
+		else
+			curr_node = @head
+			if index == 0
+				@head = @head.next_node
+				curr_node.next_node = nil
+				@size -= 1
+			else
+
+				i = 0
+				while i < index-1
+					curr_node = curr_node.next_node
+					i += 1
+				end
+				node = curr_node.next_node
+				curr_node.next_node = node.next_node
+				node.next_node = nil
+				@size -= 1
+			end
+		end
+	end
+	
 	class Node
 		attr_accessor :value, :next_node
-		def initialize(value=nil)
+		def initialize(value = nil)
 			@value = value
 			@next_node = nil
 		end
-
-		def next
-
-		end
 	end
+
 end
 
-l = LinkedList.new
-l.append('1')
-l.append('2')
-l.append('3')
 
-puts l.head.value
-puts l.head.next_node.value
-puts l.head.next_node.next_node.value
-
-puts "---"
-
-l.prepend('new 1')
-
-puts l.head.value
-puts l.head.next_node.value
-puts l.size
-puts l.at(3)
-puts "---"
-
-#puts l.pop
-puts l.tail.value
-puts "---"
-
-puts l.contains?('1')
-puts l.contains?('3')
-puts l.contains?('4')
-puts "---"
-puts l.find('1')
-puts l.find('2')
-puts l.find('3')
-
-l.to_s
