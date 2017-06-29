@@ -67,30 +67,16 @@ class LinkedList
 		return true if @head.value == value
 		return false if @size == 1
 		i = 0
-		matched = false
-		curr_node = @head.next_node
-		while !matched && i < @size - 2
-			matched = true if curr_node.value == value
-			curr_node = curr_node.next_node
-			i += 1
-		end
-		matched
+		match = matched?(value,1)
 	end
 
 	def find(value)
 		return 0 if @head.value == value
 		return @size-1 if @tail.value == value
-		matched = false
-		i = 0
-		curr_node = @head.next_node
-		while !matched  && i < @size - 2
-			i += 1
-			matched = true if curr_node.value == value
-			curr_node = curr_node.next_node
-		end
-		i
-	end
+		index = matched?(value,2)
+		index
 
+	end
 
 	def to_s
 		curr_node = @head
@@ -100,7 +86,6 @@ class LinkedList
 		end
 		print "nil\n"
 	end
-
 	def insert_at(index, value = nil)
 		if index > @size
 			puts "index out of bounds"
@@ -110,12 +95,7 @@ class LinkedList
 			elsif index == @size
 				append(value)
 			else
-				curr_node = @head.next_node
-				i = 1
-				while i != index-1
-					curr_node = curr_node.next_node
-					i += 1
-				end 
+				curr_node = iterate(index-1)
 				node = Node.new(value)
 				node.next_node = curr_node.next_node
 				curr_node.next_node = node
@@ -134,12 +114,8 @@ class LinkedList
 				curr_node.next_node = nil
 				@size -= 1
 			else
-
-				i = 0
-				while i < index-1
-					curr_node = curr_node.next_node
-					i += 1
-				end
+				#iterate to the element that is before the target element to remove
+				curr_node = iterate(index-1)
 				node = curr_node.next_node
 				curr_node.next_node = node.next_node
 				node.next_node = nil
@@ -147,7 +123,31 @@ class LinkedList
 			end
 		end
 	end
-	
+
+	private 
+	def iterate(index)
+		iterator = @head
+		for i in 0...index
+			iterator = iterator.next_node
+		end
+		iterator
+	end
+
+	private
+	def matched?(value,mode)
+		i = 0
+		match = false
+		curr_node = @head.next_node
+		while !match  && i < @size - 1
+			i += 1
+			match = true if curr_node.value == value
+			curr_node = curr_node.next_node
+		end
+		i = nil unless match
+		mode == 1 ? match : i
+	end
+
+
 	class Node
 		attr_accessor :value, :next_node
 		def initialize(value = nil)
