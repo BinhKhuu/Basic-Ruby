@@ -7,5 +7,5 @@ b.bf_search(2)
 b.to_s
 c = b.df_search(9)
 puts c
-d = b.rdf_search(9)
+d = b.rdf_search(20)
 puts d

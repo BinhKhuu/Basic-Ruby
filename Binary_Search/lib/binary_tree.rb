@@ -3,21 +3,18 @@ class BinaryTree
 	def initialize
 		@tree = nil
 	end
-
+	#Take and array of integers and builds a binary tree
+	#* list: array of integers
 	def build_tree(list)
 		return nil if list.length == 0
 		return @tree = Node.new(list[0]) if list.length == 1
-		#list had more than one element
 		@tree = Node.new(list[0])
 		curr_node = @tree
 		for i in 1..list.length-1
-			#loop until you find a place to insert
 			curr_node = @tree
 			inserted = false
 			while(!inserted)
-				#compare if less than -> move to left child
 				if list[i] <= curr_node.value 
-					#check if left child is occupied
 					if curr_node.l_child == nil
 						curr_node.l_child = Node.new(list[i])
 						curr_node.l_child.parent = curr_node
@@ -36,26 +33,29 @@ class BinaryTree
 				end
 			end
 		end
-		@tree
 	end
-
+	#Breadth first search
+	#* input : (target) integer to search binary tree for
+	#* output: node containing target or nil
 	def bf_search(target)
 		queue = []
 		set = @tree
 		queue << set
-		
 		while !queue.empty?
 			current = queue.shift
 			if current.value == target
 				return current
 			end
-			#add left and right children to queue
 			queue << current.l_child if current.l_child != nil
 			queue << current.r_child if current.r_child != nil
 		end
-		current
+		#if loop finishes no match was found
+		return nil
 	end
 
+	#post order depth first search
+	#* input : (target) integer to search binary tree for
+	#* output: node containing target or nil
 	def df_search(target)
 		discovered = []
 		stack = []
@@ -66,13 +66,15 @@ class BinaryTree
 			return current if current.value == target
 			if !discovered.include?(current)
 				discovered << current
-				#add the left and righ children
 				stack << current.r_child if current.r_child != nil
 				stack << current.l_child if current.l_child != nil
 			end
 		end
-		current
+		return nil
 	end
+	#recursive post order depth first search
+	#* input: (target) integer to search binary tree for
+	#* output: node containing target or empty array (nil)
 	def rdf_search(target)
 		current = @tree
 		node = []
@@ -81,13 +83,15 @@ class BinaryTree
 		node[0]
 	end
 
+	#recursive function for red_search
+	#* input: (target) integer to search binary tree for
+	#* input: (current) the current node to explore
+	#* input: (node) store the location of target node if found
 	private
 	def rdf(target,current,node)
-		#call left
 		return if current == nil
 		return node << current if current.value == target
 		rdf(target,current.l_child,node) 
-		#call right
 		rdf(target,current.r_child,node)
 	end
 	public
@@ -103,8 +107,6 @@ class BinaryTree
 		end
 	end
 
-
-
 	class Node
 		attr_accessor :value, :parent, :l_child, :r_child
 		
@@ -117,5 +119,4 @@ class BinaryTree
 	end
 
 end
-
 
