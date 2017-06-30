@@ -73,6 +73,24 @@ class BinaryTree
 		end
 		current
 	end
+	def rdf_search(target)
+		current = @tree
+		node = []
+		return current if current.value == target
+		rdf(target,current,node)
+		node[0]
+	end
+
+	private
+	def rdf(target,current,node)
+		#call left
+		return if current == nil
+		return node << current if current.value == target
+		rdf(target,current.l_child,node) 
+		#call right
+		rdf(target,current.r_child,node)
+	end
+	public
 	
 	def to_s
 		queue = []
@@ -83,8 +101,9 @@ class BinaryTree
 			queue << current.l_child if current.l_child != nil
 			queue << current.r_child if current.r_child != nil
 		end
-
 	end
+
+
 
 	class Node
 		attr_accessor :value, :parent, :l_child, :r_child
@@ -100,10 +119,3 @@ class BinaryTree
 end
 
 
-a = [10,5,11,4,6,9,1]
-b = BinaryTree.new
-b.build_tree(a)
-b.bf_search(2)
-b.to_s
-c = b.df_search(9)
-puts c.parent.value
